@@ -1,0 +1,62 @@
+============================================================
+================ DATASET VALIDATION REPORT =================
+============================================================
+
+Total Records:                 3129
+Unique Usernames:              3129
+Valid Profiles (Passed All):   3129
+------------------------------------------------------------
+
+--- DATA INTEGRITY & QUALITY ---
+Duplicate Usernames:           0
+Missing Usernames:             0
+Missing Followers:             0
+Followers < 1,000,000:         3129
+Followers >= 1,000,000:        0
+Invalid Follower Values (<=0): 0
+Invalid Engagement Rates (<0): 0
+------------------------------------------------------------
+
+--- CONTACT & AUTOMATION AUDIT ---
+Profiles With Public Contact:  335
+Profiles Without Contact Info: 2794 ('Not publicly available')
+Profiles With Detected Auto:   41
+Profiles Unknown Automation:   3088 ('Unknown')
+------------------------------------------------------------
+
+--- REQUIRED FIELDS AUDIT ---
+  Missing username: 0
+  Missing followers: 0
+  Missing category: 0
+  Missing engagement_rate: 0
+  Missing data_source: 0
+------------------------------------------------------------
+
+--- METRICS SUMMARY ---
+Average Followers:             22,993.32
+Median Followers:              883.00
+Average Engagement Rate:       10.5250%
+Median Engagement Rate:        4.5349%
+------------------------------------------------------------
+
+--- CATEGORY DISTRIBUTION ---
+  Technology: 1737
+  Other: 784
+  Business & Finance: 121
+  Fashion & Beauty: 104
+  Art & Design: 77
+  Education: 50
+  Travel: 39
+  Lifestyle: 38
+  Photography: 32
+  Fitness & Health: 31
+  Food & Cooking: 30
+  Entertainment: 19
+  Parenting: 16
+  Pets & Animals: 13
+  Gaming: 10
+  Sports: 10
+  Music: 8
+  Home & Garden: 5
+  Automotive: 5
+============================================================

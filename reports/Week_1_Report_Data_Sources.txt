@@ -1,0 +1,93 @@
+================================================================================
+SR NEXT INTERNSHIP - PHASE 1 WEEK 1 DATA SOURCES INDEX
+================================================================================
+Project Title: AI-Powered Instagram Influencer Analytics & Automation Insights
+Internship:    SR NEXT Data Science & AI Internship Program
+Report:        Week 1 Report - Data Sources and Provenance Documentation
+Date:          October 2026
+
+--------------------------------------------------------------------------------
+1. PRIMARY DATA SOURCE (BASELINE POSTS & PROFILES SAMPLE)
+--------------------------------------------------------------------------------
+Source Provider:       Bright Data (formerly Luminati Networks) / luminati-io
+GitHub Organization:   luminati-io
+Repository Name:       Instagram-Posts-dataset-samples
+Repository URL:        https://github.com/luminati-io/Instagram-Posts-dataset-samples
+Direct File URL:       https://raw.githubusercontent.com/luminati-io/Instagram-Posts-dataset-samples/main/Instagram%20-%20Posts.csv
+File Name in Repo:     Instagram - Posts.csv
+Local Raw Path:        data/raw/instagram_profiles_raw.csv
+License / Origin:      Public Open-Source Sample Dataset for Research & Benchmarking
+Original Rows Sampled: 1,000 raw post/profile records
+Valid Profiles Sourced:949 valid unique profiles (<1M followers)
+Final Clean Profiles:  613 profiles retained after English-dominant filtering
+Provenance Column Tag: BrightData Public Instagram Dataset (GitHub)
+
+Description:
+A public sample dataset of Instagram posts and account profiles across multiple
+categories (Lifestyle, Entertainment, Art, Fashion, Travel, etc.). It provided
+baseline follower counts, engagement metrics, media counts, and post dates.
+
+
+--------------------------------------------------------------------------------
+2. SECONDARY DATA SOURCE (EXPANSION CODING INFLUENCERS SAMPLE)
+--------------------------------------------------------------------------------
+Source Provider:       Bright Data (formerly Luminati Networks) / luminati-io
+GitHub Organization:   luminati-io
+Repository Name:       Instagram-dataset-samples
+Repository URL:        https://github.com/luminati-io/Instagram-dataset-samples
+Direct File URL:       https://raw.githubusercontent.com/luminati-io/Instagram-dataset-samples/main/Instagram%20Profiles%20-%20Github%20Hashtag.xlsx
+File Name in Repo:     Instagram Profiles - Github Hashtag.xlsx
+Local Raw Path:        data/raw/instagram_coding_influencers_raw.xlsx
+License / Origin:      Public Open-Source Sample Dataset for Research & Benchmarking
+Original Rows Sampled: 2,217 raw creator records
+Valid Profiles Sourced:2,180 valid unique profiles (<1M followers, non-duplicate)
+Final Clean Profiles:  1,948 profiles retained after English-dominant filtering
+Provenance Column Tag: BrightData Public Instagram Coding Influencers Dataset (GitHub)
+
+Description:
+A comprehensive public sample dataset dedicated to coding, software engineering,
+and technology creators on Instagram. It provided granular bio data, post dates,
+hashtags, follower/following ratios, and public contact information.
+
+
+--------------------------------------------------------------------------------
+3. DATA MERGE & FINAL CLEAN DISTRIBUTION
+--------------------------------------------------------------------------------
+Combined Baseline Working Records: 3,129 profiles
+  - Base Source Contribution:        949 profiles (30.33%)
+  - Coding Source Contribution:    2,180 profiles (69.67%)
+
+Final Clean Deliverable Records:   2,561 profiles
+  - Base Source Contribution:        613 profiles (23.94%)
+  - Coding Source Contribution:    1,948 profiles (76.06%)
+
+Deduplication:
+  - 0 overlapping usernames between the two datasets.
+  - 100% of profiles in the final clean deliverable are unique.
+
+
+--------------------------------------------------------------------------------
+4. JUSTIFICATION FOR OPEN-SOURCE / PUBLIC DATASET UTILIZATION
+--------------------------------------------------------------------------------
+1. Platform Compliance & Ethics:
+   Instagram strictly enforces anti-bot measures (HTTP 401/429 rate limits,
+   mandatory login challenges, and CAPTCHAs). Automated unauthenticated web scraping
+   violates Instagram's Terms of Service. Under strict internship guidelines, no
+   credentials, proxy rotation, CAPTCHA evasion, or security circumvention were
+   permitted.
+
+2. Authenticity & Verifiability:
+   Both datasets consist entirely of authentic public Instagram influencer profiles
+   and real historical metrics. No synthetic, mocked, or fabricated accounts were
+   created.
+
+3. Reproducibility:
+   Because the data files are permanently hosted on public GitHub repositories, the
+   entire data engineering and transformation pipeline is 100% reproducible by any
+   evaluator or auditor.
+
+4. Academic & Analytical Legitimacy:
+   Using reputable open-data samples provided by industry-standard data providers
+   enables thorough analytics, clustering, and automation insights without compromising
+   compliance or data integrity.
+================================================================================

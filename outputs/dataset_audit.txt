@@ -1,0 +1,280 @@
+================================================================================
+SR NEXT INTERNSHIP - PHASE 2 TECHNICAL DATASET AUDIT
+================================================================================
+Project Title:    AI-Powered Instagram Influencer Analytics & Automation Insights
+Audit Phase:      Phase 2 - Task 1: Dataset Inspection & Feasibility Assessment
+Target Dataset:   data/processed/instagram_influencers_final_clean.csv
+Alternate Format: data/processed/instagram_influencers_final_clean.xlsx
+Audit Timestamp:  2026-10-20 13:00:00 UTC
+Auditor:          Data Science & AI Intern (SR NEXT)
+
+================================================================================
+1. DATASET FILENAME, LOCATION, AND FILE METADATA
+================================================================================
+- Primary Clean CSV Path:   data/processed/instagram_influencers_final_clean.csv
+- Primary Clean XLSX Path:  data/processed/instagram_influencers_final_clean.xlsx
+- Baseline Backup CSV Path: data/processed/instagram_influencers_final_backup_3129.csv
+- Raw Staging CSV Path:     data/processed/cleaned_profiles.csv
+- CSV File Size:            1,204,203 bytes (1.15 MB)
+- XLSX File Size:           354,151 bytes (345.85 KB)
+- Total Record Count:       2,561 rows
+- Total Field Count:        17 columns
+- Original Source Attribution:
+  * BrightData Public Instagram Coding Influencers Dataset (GitHub): 1,948 records (76.06%)
+  * BrightData Public Instagram Dataset (GitHub):                      613 records (23.94%)
+- File Status: Verified authentic Phase 1 deliverable; clean, standardized, untouched.
+
+================================================================================
+2. SCHEMA, COLUMN DEFINITIONS, AND DATA TYPES
+================================================================================
+The dataset strictly conforms to the Phase 1 17-column standardized schema:
+
+ #  | Column Name                 | Inferred Dtype | Storage Dtype | Description
+----+-----------------------------+----------------+---------------+-------------------------------------------------------------
+ 1  | profile_url                 | string         | object        | Canonical Instagram profile URL (https://instagram.com/...)
+ 2  | name                        | string         | object        | Creator display name (emojis stripped, fallback to username)
+ 3  | username                    | string         | object        | Unique Instagram account username handle
+ 4  | instagram_handle            | string         | object        | Formatted handle with '@' prefix (e.g., @tech_creator)
+ 5  | followers                   | integer        | int64         | Public follower count (strictly bounded: 1 to 982,005)
+ 6  | category                    | string         | object        | Primary creator niche (standardized Phase 1 taxonomy)
+ 7  | avg_likes_last_10           | float          | float64       | Average like count per post as reported by source data
+ 8  | avg_comments_last_10        | integer        | int64         | Average comment count per post as reported by source data
+ 9  | engagement_rate             | float          | float64       | Computed interaction ratio percentage: (Likes+Comments)/Followers*100
+ 10 | posting_frequency_per_month | float          | float64       | Estimated monthly post count derived from activity cadence
+ 11 | hashtags                    | string         | object        | Standardized semicolon-separated hashtags (#tag1; #tag2)
+ 12 | content_themes              | string         | object        | Standardized comma-separated themes (Theme1, Theme2)
+ 13 | contact_details             | string         | object        | Public email/phone, or 'Not publicly available'
+ 14 | automation_usage            | string         | object        | Heuristic automation assessment ('Possible', 'Unknown')
+ 15 | additional_notes            | string         | object        | Qualitative status observations (verification, outliers)
+ 16 | data_source                 | string         | object        | Explicit repository provenance tracking tag
+ 17 | collection_date             | string         | object        | Ingestion and pipeline execution timestamp (ISO 8601 UTC)
+
+================================================================================
+3. MISSING VALUES AUDIT
+================================================================================
+Column Name                 | Missing Count | Missing (%) | Completeness (%) | Status
+----------------------------+---------------+-------------+------------------+-----------------
+profile_url                 |             0 |       0.00% |          100.00% | Complete (Mandatory)
+name                        |             0 |       0.00% |          100.00% | Complete (Mandatory)
+username                    |             0 |       0.00% |          100.00% | Complete (Mandatory)
+instagram_handle            |             0 |       0.00% |          100.00% | Complete (Mandatory)
+followers                   |             0 |       0.00% |          100.00% | Complete (Mandatory)
+category                    |             0 |       0.00% |          100.00% | Complete (Mandatory)
+avg_likes_last_10           |             0 |       0.00% |          100.00% | Complete (Mandatory)
+avg_comments_last_10        |             0 |       0.00% |          100.00% | Complete (Mandatory)
+engagement_rate             |             0 |       0.00% |          100.00% | Complete (Mandatory)
+posting_frequency_per_month |             0 |       0.00% |          100.00% | Complete (Mandatory)
+hashtags                    |           228 |       8.90% |           91.10% | Partial (Nullable)
+content_themes              |           228 |       8.90% |           91.10% | Partial (Nullable)
+contact_details             |             0 |       0.00% |          100.00% | Complete (Standardized)
+automation_usage            |             0 |       0.00% |          100.00% | Complete (Categorical)
+additional_notes            |          1348 |      52.64% |           47.36% | Partial (Status notes)
+data_source                 |             0 |       0.00% |          100.00% | Complete (Mandatory)
+collection_date             |             0 |       0.00% |          100.00% | Complete (Mandatory)
+
+Findings on Missingness:
+- Mandatory identifier and metric fields have 0% missing values (0 nulls across 2,561 records).
+- 228 profiles (8.90%) lack hashtags and content themes because the source accounts did not publish hashtags in their sampled posts.
+- 1,348 profiles (52.64%) have null additional notes because they exhibited standard baseline metrics without triggering high-engagement, low-frequency, or verified status flags.
+- Contact details field contains zero technical nulls because missing contact channels were properly standardized to 'Not publicly available'.
+
+================================================================================
+4. DUPLICATION AND UNIQUENESS AUDIT
+================================================================================
+- Full Row Duplicates:          0 (0.00%)
+- Duplicate `username` Values:   0 (0.00%) - Exactly 2,561 unique handles
+- Duplicate `instagram_handle`:  0 (0.00%) - Exactly 2,561 unique formatted handles
+- Duplicate `profile_url`:       0 (0.00%) - Exactly 2,561 unique canonical URLs
+- Verification Result: The dataset is 100% deduplicated at the entity level.
+
+================================================================================
+5. NUMERICAL INTEGRITY AND BOUNDARY VERIFICATION
+================================================================================
+Attribute                   | Min    | 25%    | Median | Mean       | 75%    | Max        | Std Dev
+----------------------------+--------+--------+--------+------------+--------+------------+------------
+followers                   |      1 |    272 |    708 |  16,985.49 |  3,532 |    982,005 |   69,164.35
+avg_likes_last_10           |    0.0 |   10.4 |   33.2 |     401.79 |  144.0 |  247,317.0 |    5,853.42
+avg_comments_last_10        |      0 |      0 |      2 |       6.81 |      6 |      1,456 |       39.78
+engagement_rate (%)         |  0.00% |  1.55% |  5.21% |     11.53% | 11.60% |  4,400.00% |      95.23%
+posting_frequency_per_month |    0.0 |   2.75 |   8.33 |      13.32 |   30.0 |       30.0 |       11.70
+
+Boundary and Constraint Checks:
+- Followers <= 0 violations:               0 (100% compliant)
+- Followers >= 1,000,000 violations:       0 (100% compliant, max is 982,005)
+- Negative interaction values:             0 (zero negative likes or comments)
+- Negative engagement rates:               0 (zero negative values)
+- Negative posting frequencies:            0 (zero negative values)
+- Followers Distribution by Tiers:
+  * Nano-Low (< 1,000 followers):        1,490 profiles (58.18%)
+  * Nano (1,000 - 10,000 followers):       601 profiles (23.47%)
+  * Micro (10,000 - 100,000 followers):    362 profiles (14.14%)
+  * Mid-tier (100,000 - 500,000):           89 profiles  (3.48%)
+  * Macro (500,000 - 1,000,000):            19 profiles  (0.74%)
+
+Numerical Outliers & Skewness Findings:
+- Engagement rate exhibits extreme positive right-skewness: 75% of profiles have an engagement rate <= 11.60%, yet the maximum is 4,400.00%.
+- Outlier root cause: Extreme engagement rates occur on accounts with extremely low follower bases (e.g., account @manchunited.info has 1 follower and 44 post interactions, producing 44/1 * 100 = 4,400.0%).
+- Posting frequency has an artificial ceiling at 30.0 posts/month, reflecting a capping rule implemented in Phase 1 metrics calculation.
+- Recommendation for Phase 2: Apply log transformations (e.g., log1p(followers), log1p(likes)) and robust scaling for clustering to prevent tiny-follower accounts from distorting distance-based algorithms.
+
+================================================================================
+6. ENGAGEMENT RATE FORMAT AND MATHEMATICAL VALIDATION
+================================================================================
+- Existing Engagement Rate Field: Present under column name `engagement_rate`.
+- Format: Numeric float representing a percentage (e.g., value 5.2101 represents 5.2101%, not 0.052101).
+- Governing Formula:
+    Engagement Rate (%) = ((avg_likes_last_10 + avg_comments_last_10) / followers) * 100
+- Mathematical Verification:
+  * Calculated Engagement Rate vs Stored Column Maximum Difference: 0.00000000
+  * Number of discrepancies exceeding tolerance (1e-4): 0
+  * Zero-follower division handling: Zero occurrences (minimum followers is 1).
+  * Accounts with 0.0% engagement rate: 53 profiles (accounts with 0 likes and 0 comments).
+- Validation Conclusion: Stored engagement rates are 100% mathematically consistent with the available interaction and follower metrics.
+
+================================================================================
+7. INFLUENCER CATEGORY TAXONOMY
+================================================================================
+The dataset includes 19 standardized categories conforming to the Phase 1 taxonomy:
+
+Category Name        | Count | Percentage | Primary Characteristics
+---------------------+-------+------------+----------------------------------------------------
+Technology           | 1,542 |     60.21% | Developers, software engineers, Python/JS, coding tips
+Other                |   473 |     18.47% | Generalist profiles, mixed niches, unclassified tags
+Business & Finance   |   113 |      4.41% | Entrepreneurs, investing, startups, marketing, crypto
+Fashion & Beauty     |    85 |      3.32% | Style, cosmetics, apparel, skincare, models
+Art & Design         |    71 |      2.77% | Digital illustrators, graphic designers, visual art
+Education            |    47 |      1.84% | Tutors, academic learning, university students
+Travel               |    36 |      1.41% | Tourism, wanderlust, landscape photography, hotels
+Lifestyle            |    35 |      1.37% | Daily vlogging, personal branding, routine
+Fitness & Health     |    29 |      1.13% | Workouts, bodybuilding, nutrition, gym, yoga
+Photography          |    28 |      1.09% | Professional photographers, camera gear, portraiture
+Food & Cooking       |    28 |      1.09% | Recipes, restaurants, culinary creators, chefs
+Entertainment        |    17 |      0.66% | Movies, comedy creators, anime, pop culture
+Parenting            |    15 |      0.59% | Motherhood, family life, childcare
+Pets & Animals       |    12 |      0.47% | Dogs, cats, wildlife, pet care
+Sports               |    10 |      0.39% | Football, basketball, athletes, training
+Gaming               |     8 |      0.31% | Esports, streamers, gaming clips, consoles
+Music                |     6 |      0.23% | Musicians, DJs, producers, guitarists
+Home & Garden        |     3 |      0.12% | Interior decor, architecture, plant care
+Automotive           |     3 |      0.12% | Supercars, motorcycles, auto repair
+---------------------+-------+------------+----------------------------------------------------
+Total                | 2,561 |    100.00% | 19 Distinct Categories
+
+Category Distribution Findings:
+- Severe class imbalance: Technology accounts for 60.21% of the dataset, reflecting the secondary coding dataset integration.
+- 'Other' is the second largest segment (18.47%), representing creators whose bios/hashtags did not trigger specific niche keywords.
+- 17 specialized niches account for the remaining 21.32% (546 profiles).
+- Recommendation for Phase 2: In dashboard filtering and clustering, support category-level stratification and cross-niche normalization.
+
+================================================================================
+8. ENGAGEMENT AND POSTING CADENCE FEATURES
+================================================================================
+1. Engagement Features Available:
+   - `followers`: Total audience size (integer).
+   - `avg_likes_last_10`: Post-level like metric (float).
+   - `avg_comments_last_10`: Post-level comment metric (integer).
+   - `engagement_rate`: Ratio percentage (float).
+   - Engagement Ratio Opportunities for Feature Engineering:
+     * Like-to-Comment Ratio: `avg_likes / (avg_comments + 1)`
+     * Engagement-to-Follower Efficiency Index
+     * Follower-Engagement Dispersion Scores
+
+2. Posting Frequency Features Available:
+   - `posting_frequency_per_month`: Float representing estimated monthly volume.
+   - 25% of creators publish <= 2.75 posts/month (low activity).
+   - 50% publish <= 8.33 posts/month (~2 posts per week).
+   - Top 25% are capped at 30.0 posts/month (daily publishing cadence).
+   - 5 profiles have 0.0 posting frequency (dormant accounts).
+
+================================================================================
+9. TEXT AND NLP FEATURE AVAILABILITY
+================================================================================
+1. Text Features in `instagram_influencers_final_clean.csv`:
+   - `hashtags`: Available for 2,333 profiles (91.10%). Format: `#tag1; #tag2; #tag3`.
+     * Average number of hashtags per tagged profile: 14.11 tags (range: 1 to 30).
+     * Ideal for TF-IDF vectorization, topic modeling, and tag co-occurrence graphs.
+   - `content_themes`: Available for 2,333 profiles (91.10%). Format: `Theme1, Theme2`.
+     * Extracted top keywords (up to 5 per profile).
+   - `name`: Available for 2,561 profiles (100.00%). Emojis stripped, clean text.
+   - `additional_notes`: Available for 1,213 profiles (47.36%). Contains qualitative status flags.
+
+2. Captions & Bio Availability in Staging/Raw Data:
+   - Standalone post captions are NOT directly present as an independent column in the final 17-column clean deliverable.
+   - However, in `data/processed/cleaned_profiles.csv`, the `bio` column is preserved and contains text for 2,418 out of 2,561 clean profiles (94.42%). In the underlying BrightData raw dataset, this field captures the creator bio and recent post caption text.
+   - NLP Feasibility Conclusion: Substantial text data exists for NLP via `hashtags` and `content_themes` directly in the deliverable, with optional non-destructive bio enrichment available from `cleaned_profiles.csv` if deeper sentiment or language analysis is desired.
+
+================================================================================
+10. AUTOMATION ADOPTION LABELS AUDIT
+================================================================================
+- Existing Field: `automation_usage`
+- Value Distribution:
+  * `Unknown`:  2,526 profiles (98.63%)
+  * `Possible`:    35 profiles ( 1.37%)
+  * `Unlikely`:     0 profiles ( 0.00%)
+
+Critical Technical Assessment:
+1. Lack of Ground Truth: The `automation_usage` field does NOT contain verified, ground-truth human or platform labels.
+2. Heuristic Generation: In Phase 1 (`src/calculate_metrics.py`), this field was derived from a rudimentary rule: accounts with posting_frequency > 150 or engagement_rate > 50% or low timestamp variance were tagged 'Possible', and all others defaulted to 'Unknown'.
+3. Extreme Class Imbalance: 98.6% of profiles are labeled 'Unknown'.
+4. Scientific Implication: Supervised machine learning CANNOT be trained directly to predict `automation_usage` without circular logic (training a model on features to predict a rule derived from those exact same features).
+5. Recommendation for Phase 2:
+   - Implement an Unsupervised Anomaly Detection Framework (Isolation Forest / Local Outlier Factor) to detect bot-like engagement and irregular posting patterns.
+   - Construct a Multi-Factor Heuristic Automation Risk Index (0 - 100) combining interaction ratios, activity cadence, and engagement anomalies.
+
+================================================================================
+11. PHASE 2 REQUIREMENTS FEASIBILITY MATRIX
+================================================================================
+Phase 2 Requirement                | Feasibility | Direct vs Additional Data | Implementation Strategy
+-----------------------------------+-------------+---------------------------+-------------------------------------------------------
+1. Exploratory Data Analysis (EDA) | Fully Ready | Direct from clean dataset | Univariate & bivariate distributions, correlations,
+                                   |             |                           | category comparisons, follower tier segmentations.
+-----------------------------------+-------------+---------------------------+-------------------------------------------------------
+2. Feature Engineering             | Fully Ready | Direct from clean dataset | Log-transformations (followers, likes, comments),
+   (Numeric & Categorical)         |             |                           | like/comment ratios, posting tier bins, one-hot niches.
+-----------------------------------+-------------+---------------------------+-------------------------------------------------------
+3. Feature Engineering             | Fully Ready | Direct (+ optional bio)   | TF-IDF vectorization on hashtags and themes; optional
+   (NLP / Text Features)           |             |                           | text length and keyword density metrics.
+-----------------------------------+-------------+---------------------------+-------------------------------------------------------
+4. Unsupervised Clustering         | Fully Ready | Direct from clean dataset | K-Means & Agglomerative Clustering to discover natural
+   (Influencer Segmentation)       |             |                           | creator archetypes (e.g. Viral Niche, Steady Engager).
+-----------------------------------+-------------+---------------------------+-------------------------------------------------------
+5. Influencer Ranking Algorithm    | Fully Ready | Direct from clean dataset | Multi-Criteria Decision Framework combining weighted
+                                   |             |                           | Engagement, Reach, Consistency, and Category Rank.
+-----------------------------------+-------------+---------------------------+-------------------------------------------------------
+6. Anomaly / Outlier Detection     | Fully Ready | Direct from clean dataset | Isolation Forest / LOF to detect engagement anomalies
+                                   |             |                           | and suspicious follower-to-interaction ratios.
+-----------------------------------+-------------+---------------------------+-------------------------------------------------------
+7. Automation Insights Engine      | Fully Ready | Requires Heuristic/Proxy  | Rule-based Automation Risk Index (0-100) + Anomaly
+                                   |             | (No supervised labels)    | Detection; avoid flawed supervised classification.
+-----------------------------------+-------------+---------------------------+-------------------------------------------------------
+8. Predictive Sponsorship Pricing  | Conditional | Requires Economic Proxy   | Formulate standard CPM / CPE pricing benchmarks rather
+                                   |             | (No historical $ revenue) | than supervised regression on non-existent revenue data.
+-----------------------------------+-------------+---------------------------+-------------------------------------------------------
+9. Streamlit Analytics Dashboard   | Fully Ready | Direct from clean dataset | Interactive web UI with category filters, leaderboards,
+                                   |             |                           | cluster visualizations, and creator profile explorer.
+-----------------------------------+-------------+---------------------------+-------------------------------------------------------
+10. Final Comprehensive Report     | Fully Ready | Direct from clean dataset | Statistical findings, visual charts, cluster profiles,
+                                   |             |                           | and strategic recommendations.
+
+================================================================================
+12. SUMMARY OF FINDINGS AND RECOMMENDED NEXT STEPS
+================================================================================
+Summary of Findings:
+1. Dataset Integrity: `data/processed/instagram_influencers_final_clean.csv` contains 2,561 valid, unique public creator profiles strictly bounded between 1 and 982,005 followers.
+2. Completeness: Core identifier and engagement columns have 0% missing values. Hashtags and themes have 91.10% coverage.
+3. Engagement Rate: Perfectly verified with 0.0 delta against the official formula: ((Likes + Comments) / Followers) * 100.
+4. Automation Labels: Current `automation_usage` field is an unverified heuristic (98.6% 'Unknown') and must not be used as ground-truth for supervised training.
+5. Text / NLP: Rich hashtag and theme vocabulary exists for NLP feature extraction.
+
+Recommended Next Implementation Steps for Phase 2:
+- STEP 1 (Feature Engineering):
+  * Create `src/feature_engineering.py` to compute log-transformed numerical features (`log_followers`, `log_likes`, `log_comments`), `like_to_comment_ratio`, engagement efficiency scores, and TF-IDF representations of hashtags.
+- STEP 2 (Clustering & Influencer Segmentation):
+  * Create `src/clustering.py` implementing K-Means and Hierarchical Clustering, determining optimal clusters via Elbow Curve and Silhouette Analysis.
+- STEP 3 (Influencer Ranking Engine):
+  * Create `src/ranking.py` implementing a robust composite scoring model (Influence Score, Engagement Score, Quality Score) with category-specific leaderboards.
+- STEP 4 (Automation & Anomaly Detection):
+  * Create `src/automation_detection.py` implementing Isolation Forest and a composite Automation Risk Index (0 to 100).
+- STEP 5 (Streamlit Dashboard):
+  * Build `app.py` providing an interactive dashboard for exploring rankings, clusters, and individual creator metrics.
+================================================================================

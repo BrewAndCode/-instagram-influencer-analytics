@@ -1,0 +1,101 @@
+================================================================================
+SR NEXT INTERNSHIP - STEP 5A: DATA QUALITY & ANOMALY DETECTION REPORT
+================================================================================
+Project Title:    AI-Powered Instagram Influencer Analytics & Automation Insights
+Module:           src/anomaly_detection.py
+Report Path:      outputs/anomaly_detection_report.txt
+Algorithm:        Isolation Forest (contamination=0.05, n_estimators=100, random_state=42)
+Total Records:    2,561 authentic public Instagram profiles
+Status:           COMPLETED & VALIDATED
+
+================================================================================
+1. EXECUTIVE SUMMARY & OBJECTIVE
+================================================================================
+The objective of Part A is to conduct a rigorous statistical anomaly detection pass
+across all 2,561 influencer profiles. The pipeline combines rule-based heuristic
+audits of known social media edge cases with high-dimensional Isolation Forest modeling
+to isolate multivariate outliers while carefully distinguishing mathematically valid
+viral dynamics from potential data collection limitations.
+
+================================================================================
+2. RULE-BASED STATISTICAL EXTREMES & DATA QUALITY AUDIT
+================================================================================
+A. Extremely High Engagement Rates (> 100%):
+   - Identified: 9 profiles (0.35% of dataset).
+   - Maximum Observation: 4,400.00% ('manchunited.info': 1 follower, 43 likes, 1 comment).
+   - Data Quality Distinction: These profiles are MATHEMATICALLY VALID according to the
+     internship formula: ER = (avg_likes + avg_comments) / followers * 100.
+     In social media mechanics, when content reaches Instagram's Explore page or Reels
+     recommendation feed, non-followers interact in volume without following, legitimately
+     pushing ER above 100%. They are classified as 'Statistically Extreme Ratios', NOT data errors.
+
+B. Zero Likes Despite Large Followings (> 10,000 followers):
+   - Identified: 62 profiles.
+   - Analysis: Accounts with tens or hundreds of thousands of followers that record 0 likes
+     exhibit a profound disconnect. They reflect either dormant legacy followings or
+     platform UI like-hiding behavior.
+
+C. Hidden Likes Phenomenon (0 Likes with Active Positive Comments):
+   - Identified: 46 profiles.
+   - Platform Insight: Instagram natively allows creators to hide like counts from public display.
+     When like counts are hidden, scrapers record 0 likes while comment counts remain visible.
+     Classified as 'Potential Hidden Metrics', not automated fraud.
+
+D. Active Daily Posting with Completely Zero Interaction:
+   - Identified: 44 profiles posting >= 20 posts/month with 0% ER.
+
+================================================================================
+3. ISOLATION FOREST CONFIGURATION & METHODOLOGY
+================================================================================
+- Algorithm:                  Isolation Forest (scikit-learn)
+- Contamination Parameter:    0.05 (hypothesized 5% anomaly proportion)
+- Number of Estimators:       100 isolation trees
+- Random Seed:                42 (fixed for 100% reproducibility)
+- Feature Set Evaluated (9):
+  * log_followers
+  * log_likes
+  * log_comments
+  * log_engagement_rate
+  * log_posting_frequency
+  * like_to_comment_ratio
+  * comment_to_like_ratio
+  * interaction_efficiency
+  * hashtag_count
+- Direct Identifiers:         'username', 'name', 'profile_url' STRICTLY EXCLUDED.
+- Anomalies Flagged:          128 profiles (5.00%)
+- Decision Function Bounds:   [-0.2081, 0.1890] (median: 0.1384)
+
+================================================================================
+4. ISOLATION FOREST ANOMALIES ACROSS CLUSTERS
+================================================================================
+Cluster Label                            | Total Size | Anomalies  | Anomaly Rate
+---------------------------------------------------------------------------
+Active Mid-to-Macro Tier Influencers     | 472        | 67         | 14.19%
+Emerging High-Engagement Nano Creators   | 1859       | 20         | 1.08%
+High-Reach Low-Engagement Accounts       | 230        | 41         | 17.83%
+
+================================================================================
+5. TOP 10 MOST ANOMALOUS PROFILES BY ISOLATION FOREST SCORE
+================================================================================
+Username                  | Followers  | Likes    | Comments | ER %     | Cadence  | Score    | Status
+-----------------------------------------------------------------------------------------------
+sprite_india              | 134,429    | 116024   | 15       | 86.32    | 30.0     | -0.2081  | Valid Standard Obser
+jurika.juju               | 14,825     | 247317   | 603      | 1672.31  | 17.3     | -0.1961  | Statistically Extrem
+robertmartinezreels       | 249,663    | 48288    | 90       | 19.38    | 30.0     | -0.1821  | Valid Standard Obser
+cryptoland_en             | 108,405    | 29964    | 0        | 27.64    | 16.9     | -0.1817  | Valid Standard Obser
+charupandey09             | 10,108     | 0        | 89       | 0.88     | 7.2      | -0.1664  | Potential Hidden Met
+sarahidan                 | 148,968    | 0        | 78       | 0.05     | 30.0     | -0.1571  | Potential Hidden Met
+giandomenicolom           | 8,025      | 8825     | 319      | 113.94   | 0.1      | -0.1552  | Statistically Extrem
+makmorg                   | 3,342      | 0        | 63       | 1.89     | 7.2      | -0.1537  | Potential Hidden Met
+adorableruffs             | 144,794    | 16097    | 57       | 11.16    | 30.0     | -0.1507  | Valid Standard Obser
+sofianealarcon            | 73,420     | 9320     | 5        | 12.70    | 26.2     | -0.1491  | Valid Standard Obser
+
+================================================================================
+6. VERIFICATION & REPRODUCIBILITY SUMMARY
+================================================================================
+[PASSED] Isolation Forest executed deterministically on 9 numerical features.
+[PASSED] Zero direct identifiers included in model training.
+[PASSED] Output rows match exactly 2,561 with 100% unique usernames.
+[PASSED] Full traceability preserved via username primary key.
+[PASSED] Baseline dataset verified unmodified.
+================================================================================

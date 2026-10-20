@@ -1,0 +1,44 @@
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+
+# Virtual environments & secrets
+venv/
+env/
+.venv/
+.env
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Operating System metadata
+.DS_Store
+Thumbs.db
+
+# Streamlit local credentials (preserve config.toml)
+.streamlit/credentials.toml
+
+# Execution logs (preserve folder structure via .gitkeep)
+logs/*.log
+!logs/.gitkeep
+
+# Intermediate raw archives (excluded to keep repository lean)
+data/raw/*
+!data/raw/.gitkeep
+
+# Processed data: exclude intermediate backups, preserve official baseline deliverables
+data/processed/*
+!data/processed/.gitkeep
+!data/processed/instagram_influencers_final_clean.csv
+!data/processed/instagram_influencers_final_clean.xlsx
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/

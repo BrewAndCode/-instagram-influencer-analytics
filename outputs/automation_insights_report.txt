@@ -1,0 +1,100 @@
+================================================================================
+SR NEXT INTERNSHIP - STEP 5B: AUTOMATION INSIGHTS & RISK INDEX REPORT
+================================================================================
+Project Title:    AI-Powered Instagram Influencer Analytics & Automation Insights
+Module:           src/anomaly_detection.py
+Report Path:      outputs/automation_insights_report.txt
+Methodology:      Transparent Heuristic Automation Risk Index (0–100 Scale)
+Total Records:    2,561 authentic public Instagram profiles
+Status:           COMPLETED & VALIDATED
+
+================================================================================
+1. CRITICAL METHODOLOGICAL DISCLAIMERS & ETHICAL SAFEGUARDS
+================================================================================
+1. NOT A PROOF OF AUTOMATION OR FRAUD:
+   - High posting cadence, zero hashtags, or low engagement are NOT definitive proof of bots.
+   - Human creators may post daily, brands frequently syndicate announcements, and influencers
+     frequently disable public like counts.
+2. NOT A CALIBRATED PROBABILITY:
+   - The Automation Risk Index is an empirical heuristic risk-screening score [0–100],
+     NOT a calibrated Bayesian probability.
+3. NO SUPERVISED PREDICTION CLAIM:
+   - Ground-truth automation labels are unavailable in public Instagram metadata (98.6% 'Unknown').
+   - No supervised machine learning classifier was trained on unverified proxy targets.
+
+================================================================================
+2. HEURISTIC AUTOMATION RISK INDEX ARCHITECTURE & WEIGHTS
+================================================================================
+The Automation Risk Index synthesizes four defensible behavioral indicators:
+
+Indicator Dimension            | Weight   | Operational Logic & Bounds
+--------------------------------------------------------------------------------
+Cadence Risk                   | 25.0%    | Rigid daily posting (>=28/mo scores 100, <=5 scores 0)
+Engagement Disconnect Risk     | 30.0%    | Audience reach scaled against ER suppression (<2.0% ER)
+Interaction Asymmetry Risk     | 25.0%    | 0 likes on high followers / hidden likes / 0 comments
+Metadata Absence Risk          | 20.0%    | Zero hashtags & themes (100) vs partial (30) vs full (0)
+
+Formula:
+  Automation Risk Index = 0.25*Cadence + 0.30*Disconnect + 0.25*Asymmetry + 0.20*Metadata
+
+================================================================================
+3. RISK TIER DISTRIBUTION ACROSS ALL 2,561 INFLUENCERS
+================================================================================
+- Low Risk                 : 1,958 profiles (76.45%)
+- Moderate Risk            : 347 profiles (13.55%)
+- High Risk                : 193 profiles ( 7.54%)
+- Elevated Audit Required  : 63 profiles ( 2.46%)
+
+================================================================================
+4. TOP 15 PROFILES WITH ELEVATED AUDIT RISK (Score >= 75)
+================================================================================
+Username                  | Followers  | ER %     | Cadence  | Tags  | Risk Index | Primary Risk Driver
+-----------------------------------------------------------------------------------------------
+vecollen                  | 894,909    | 0.0044   | 30.0     | 0     | 99.69      | Rigid Posting Cadence
+jembefmtz                 | 115,301    | 0.0009   | 30.0     | 0     | 95.30      | Rigid Posting Cadence
+sarahidan                 | 148,968    | 0.0524   | 30.0     | 0     | 95.19      | Rigid Posting Cadence
+withameliataylor          | 115,260    | 0.0399   | 30.0     | 0     | 94.80      | Rigid Posting Cadence
+jadeahmadadeenhutchinson  | 103,452    | 0.0232   | 30.0     | 0     | 94.78      | Rigid Posting Cadence
+shah_boutique_            | 85,714     | 0.0000   | 30.0     | 0     | 94.67      | Rigid Posting Cadence
+1waveempire               | 76,824     | 0.0000   | 30.0     | 0     | 94.43      | Rigid Posting Cadence
+chloelockleyy             | 78,665     | 0.0254   | 30.0     | 0     | 94.17      | Rigid Posting Cadence
+marabou_boutique          | 59,573     | 0.0000   | 30.0     | 0     | 93.87      | Rigid Posting Cadence
+quartyardsd               | 54,308     | 0.0018   | 30.0     | 0     | 93.65      | Rigid Posting Cadence
+alancloset                | 51,148     | 0.0000   | 30.0     | 0     | 93.54      | Rigid Posting Cadence
+mavazitamu                | 43,526     | 0.0000   | 30.0     | 0     | 93.19      | Rigid Posting Cadence
+jangsquared_              | 34,810     | 0.0057   | 30.0     | 0     | 92.64      | Rigid Posting Cadence
+mypretty.store            | 33,752     | 0.0000   | 30.0     | 0     | 92.64      | Rigid Posting Cadence
+neurofitnick              | 45,960     | 0.0653   | 30.0     | 0     | 92.55      | Rigid Posting Cadence
+
+================================================================================
+5. CLUSTER 2 ('HIGH-REACH LOW-ENGAGEMENT') IN RELATION TO AUTOMATION RISK
+================================================================================
+- Cluster 2 Average Automation Risk Index: 62.70 (Median: 64.19)
+- Cluster 0 Average Automation Risk Index: 25.84 (Median: 25.00)
+- Cluster 1 Average Automation Risk Index: 8.60 (Median: 1.27)
+Key Finding:
+Cluster 2 exhibits a dramatically higher concentration of elevated automation risk indicators
+(19.1% require elevated audit), validating that K-Means effectively
+segregated inorganic/dormant accounts from organic creator clusters.
+
+================================================================================
+6. STRATEGIC GUIDANCE FOR BRAND COLLABORATION & SPONSOR AUDITING
+================================================================================
+1. Low Risk Profiles (< 25.0): Greenlit for standard influencer outreach. Organic engagement and
+   cadence indicate healthy audience relationships.
+2. Moderate Risk Profiles (25.0 – 50.0): Standard commercial candidates; verify post consistency.
+3. High Risk Profiles (50.0 – 75.0): Secondary review recommended; inspect comment authenticity.
+4. Elevated Audit Required (>= 75.0): Manual verification mandated. Before entering commercial contracts,
+   brands must verify authentic viewer reach via native Instagram Insights / Story views to confirm
+   that audience is active and responsive.
+
+================================================================================
+7. VERIFICATION CHECKLIST
+================================================================================
+[PASSED] 2,561 records evaluated with zero missing values.
+[PASSED] Automation Risk Index strictly bounded within [0.00, 100.00].
+[PASSED] All 4 sub-scores bounded within [0.00, 100.00].
+[PASSED] No unverified claims of fraud or bot confirmation made.
+[PASSED] Baseline Phase 1 dataset hash confirmed intact.
+[PASSED] Deliverables exported to outputs/automation_insights.csv and outputs/automation_insights_report.txt.
+================================================================================
